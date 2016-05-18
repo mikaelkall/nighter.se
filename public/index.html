@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Nighter.se</title>
+    <link rel="stylesheet" href="codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="codemirror/theme/base16-dark.css">
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+
+    <style>
+      @import url(http://fonts.googleapis.com/css?family=Press+Start+2P);
+      @import url(http://fonts.googleapis.com/css?family=Open+Sans);
+      html
+      {
+        -webkit-text-size-adjust: 100%;
+        background-image:url('images/bg.gif');
+        height: 100%;
+        overflow-y: hidden;
+        overflow-x: hidden;
+      }
+
+      body
+      {
+        height: 100%;
+        font-family: Helvetica, sans-serif;
+      }
+
+
+      .CodeMirror-matchingbracket
+      {
+        font-weight: bold;
+        color: brown !important;
+      }
+
+      .CodeMirror
+      {
+        height:100%;
+        background-color: black !important;
+        border-left:   1px solid rgb(180,180,180);
+        border-right:  1px solid rgb(180,180,180);
+        border-bottom: 1px solid rgb(180,180,180);
+
+      }
+
+      .terminal-header-text
+      {
+        margin-left: 100px;
+      }
+
+      .ui-dialog, .ui-dialog-content
+      {
+          margin: 0 !important;
+          padding: 0 !important;
+          background-color: black !important;
+      }
+
+      .ui-dialog-content
+      {
+          overflow-y: scroll !important;
+      }
+
+      .ui-dialog-titlebar, .ui-widget-header
+      {
+          height: 12px;
+          font-size: 10px;
+          margin: 0 !important;
+          background-color: black !important;
+      }
+
+     .ui-dialog-titlebar-close
+     {
+         height: 15px !important;
+         width: 15px !important;
+         margin-top: -8px !important;
+     }
+
+     .icon
+     {
+         position: absolute;
+         cursor: pointer;
+         left: 25px;
+         color: white;
+         font-size: 12px;
+         text-align: center;
+         width: 50px;
+         z-index: 2;
+     }
+
+     .icon img
+     {
+         width: 100%;
+     }
+
+      #logo
+      {
+          position: absolute;
+          top: 0px;
+          /*color: #e33;*/
+          color: #00FF00;
+          left: 20px;
+          font-size: 40px;
+          font-family: 'Press Start 2P', cursive;
+          text-shadow: 0px 2px 3px #666;
+      }
+
+      .icon_text
+      {
+        background-color: black;
+        color: white;
+        font-weight: bold;
+      }
+
+      #webbstjarnan
+      {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+      }
+
+      #webbstjarnan img
+      {
+          width: 70px;
+      }
+
+      #license
+      {
+          position: fixed;
+          bottom: 1px;
+          right: 1px;
+      }
+
+      .dialog_text
+      {
+          color: white;
+          background-color: black;
+          padding: 20px;
+          height: 100%;
+      }
+
+      .dialog
+      {
+          width: 700px;
+          height: 400px;
+          position: absolute;
+          left: 0;
+          top: 0;
+          border: 1px solid white;
+          background-color: black;
+          color: white;
+          display: none;
+          z-index: 100;
+          -webkit-border-top-left-radius: 10px;
+          -webkit-border-top-right-radius: 10px;
+          -moz-border-radius-topleft: 10px;
+          -moz-border-radius-topright: 10px;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+      }
+
+      .dialog_header
+      {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          width: auto;
+          height: 25px;
+          color: white;
+          font-weight: bold;
+          background-color: #555;
+          padding-left: 10px;
+          font-size: 16px;
+          border-bottom: 1px solid #222;
+          -webkit-border-top-left-radius: 10px;
+          -webkit-border-top-right-radius: 10px;
+          -moz-border-radius-topleft: 10px;
+          -moz-border-radius-topright: 10px;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+      }
+
+      .dialog_header span
+      {
+          margin-top: 3px;
+          display: block;
+      }
+
+      .dialog_content
+      {
+          position: absolute;
+          top: 25px;
+          left: 0px;
+          right: 0px;
+          bottom: 0px;
+          padding: 5px;
+          overflow-y: scroll;
+      }
+      iframe
+      {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+          border: 0;
+          background-color: white;
+      }
+      #webben_container
+      {
+          overflow: hidden;
+          padding: 0;
+          top: 50px;
+      }
+      #adress
+      {
+          position: absolute;
+          top: 25px;
+          padding-left: 20px;
+          right: 2px;
+          left: 80px;
+      }
+      .dialog_ops
+      {
+          position: absolute;
+          top: 4px;
+          right: 8px;
+          z-index: 200;
+      }
+
+      .web_ops
+      {
+          position: absolute;
+          top: 30px;
+          left: 8px;
+          z-index: 200;
+      }
+
+      .web_ops img
+      {
+          height: 18px;
+          padding-right: 3px;
+          cursor: pointer;
+      }
+
+      #dialog_6
+      {
+          background-color: #eee !important;
+      }
+
+
+      .dialog_ops img
+      {
+          width: 18px;
+          cursor: pointer;
+      }
+
+      #small_web
+      {
+          position: absolute;
+          top: 30px;
+          height: 16px;
+          left: 85px;
+          z-index: 200;
+      }
+
+      .dialog_content p
+      {
+          margin-left: 20px;
+          margin-right: 20px;
+          text-align: justify;
+          font-family: 'Open Sans', sans-serif;
+      }
+
+      .dialog_content p a
+      {
+          color: red;
+      }
+
+      .dialog_content h1,.dialog_content h2,.dialog_content h3
+      {
+          font-family: 'Press Start 2P', cursive;
+          margin-left: 20px;
+          font-weight: bold;
+
+      }
+      .dialog_content h1
+      {
+          font-size: 22px;
+      }
+      .dialog_content h2
+      {
+          font-size: 16px;
+      }
+      .dialog_content h3
+      {
+          font-size: 14px;
+      }
+
+      .flickr_badge_image
+      {
+          float: left;
+          padding: 10px;
+      }
+
+      .flickr_badge_image img
+      {
+          border: 3px solid white;
+      }
+
+    </style>
+  </head>
+  <body>
+
+    <h1 id="logo">Nighter.se</h1>
+
+    <div class="icon" id="icon_1">
+      <img src="/images/question.png" /><br/>
+      <span class="icon_text">Notes</span>
+    </div>
+
+    <div class="icon" id="icon_2">
+      <img src="/images/photos.png" /><br/>
+      <span class="icon_text">Pictures</span>
+    </div>
+
+    <div class="icon" id="icon_3">
+      <img src="/images/terminal.png" /><br/>
+      <span class="icon_text">Coding</span>
+    </div>
+
+    <div class="icon" id="icon_5">
+      <img src="/images/link.png" /><br/>
+      <span class="icon_text">Links</span>
+    </div>
+
+    <div class="icon" id="icon_6">
+      <img src="/images/webben.png" /><br/>
+      <span class="icon_text">Web</span>
+    </div>
+
+    <div class="icon" id="icon_7">
+      <img src="/images/about.png" /><br/>
+      <span class="icon_text">About</span>
+    </div>
+
+
+    <div class="dialog" id="dialog_1">
+      <div class="dialog_ops">
+        <img src="/images/restore.png" />
+        <img src="/images/minimize.png" />
+        <img class="close" src="/images/close.png" />
+      </div>
+      <div class="dialog_header"><span>Notes</span></div>
+      <div class="dialog_content">
+        <h1>Notes</h1>
+        <p>
+            Here I will write about stuff I find intressting.
+        </p>
+      </div>
+    </div>
+
+    <div class="dialog" id="dialog_2">
+      <div class="dialog_ops">
+        <img src="/images/restore.png" />
+        <img src="/images/minimize.png" />
+        <img class="close" src="/images/close.png" />
+      </div>
+      <div class="dialog_header"><span>Pictures</span></div>
+      <div class="dialog_content">
+        <h1>Pictures</h1>
+        <p>
+          Some pictures from my <a href="https://www.flickr.com/photos/137506650@N05/sets/72157668477957746/">Flickr</a>
+        </p>
+        <div id="flickr_badge_uber_wrapper">
+          <div id="flickr_badge_wrapper">
+
+            <script type="text/javascript" src="http://www.flickr.com/badge_code_v2.gne?count=100&display=latest&size=m&layout=x&source=user&user=137506650@N05"></script>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dialog" id="dialog_3">
+      <div class="dialog_ops">
+        <img src="/images/restore.png" />
+        <img src="/images/minimize.png" />
+        <img class="close" src="/images/close.png" />
+      </div>
+      <div class="dialog_header"><span>Coding</span></div>
+      <div class="dialog_content">
+        <h1>Coding!</h1>
+        <p>
+            You can find my sourcecode on github.<br/><br/>
+            <a href='https://github.com/mikaelkall'>https://github.com/mikaelkall</a><br/><br/>
+
+            My gits.<br/><br/>
+            <a href='https://gist.github.com/mikaelkall'>https://gist.github.com/mikaelkall</a>
+
+
+        </p>
+      </div>
+    </div>
+
+    <div class="dialog" id="dialog_7">
+      <div class="dialog_ops">
+        <img src="/images/restore.png" />
+        <img src="/images/minimize.png" />
+        <img class="close" src="/images/close.png" />
+      </div>
+      <div class="dialog_header"><span>About</span></div>
+      <div class="dialog_content">
+        <h1>About</h1>
+        <p>
+            My name is Mikael Kall I'm dedicated with passion for computers and to learn more, my hobby has become my work.<br/><br/>
+        </p>
+        <p>
+            <i>mail: kall.micke [at] gmail.com  </i><br/>
+            <i>irc: nighter</i>
+        </p>
+      </div>
+    </div>
+
+    <div class="dialog" id="dialog_5">
+      <div class="dialog_ops">
+        <img src="/images/restore.png" />
+        <img src="/images/minimize.png" />
+        <img class="close" src="/images/close.png" />
+      </div>
+      <div class="dialog_header"><span>Links</span></div>
+      <div class="dialog_content">
+        <h1>Linkarchive</h1>
+        <p>
+          <ul>
+            <li><a href="https://www.docker.com/">Docker build and ship your applications.</a></li>
+            <li><a href="https://gist.github.com/mikaelkall">My public gits</a></li>
+            <li><a href="https://github.com/mikaelkall">My place on github</a></li>
+            <li><a href="https://www.youtube.com/channel/UCZxLmoTc-E2fDsywgbQ2UCQ">My youtube channel</a></li>
+        </p>
+      </div>
+    </div>
+
+    <div class="dialog" id="dialog_6">
+      <div class="dialog_ops">
+        <img src="/images/restore.png" />
+        <img src="/images/minimize.png" />
+        <img class="close" src="/images/close.png" />
+      </div>
+      <div class="dialog_header">Web</div>
+      <div class="web_ops">
+        <img src="/images/back.png"    onclick="document.getElementById('webben').contentWindow.history.back(-1);" />
+        <img src="/images/forward.png" onclick="webben.history.forward()" />
+        <img src="/images/refresh.png" onclick="document.getElementById('webben').contentWindow.location.reload();" />
+      </div>
+        <img id="small_web" src="/images/webben.png" />
+
+      <input type="text" id="adress" value="https://en.wikipedia.org/wiki/Grey_hat"/>
+      <div id="webben_container" class="dialog_content" >
+        <iframe id="webben" name="webben" src="https://en.wikipedia.org/wiki/Grey_hat"></iframe>
+      </div>
+    </div>
+
+
+    <a id="license" rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">
+      <img alt="Creative Commons License" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" />
+    </a>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+    <script src="javascript/jquery.ui.touch-punch.min.js"></script>
+
+    <script>
+
+      z = 101;
+
+      $(".icon").draggable();
+      $(".dialog").draggable({ handle: ".dialog_header", start: function (){ $(this).css('z-index',z++) } }).resizable();
+      $(".dialog").click(function() { $(this).css('z-index',z++) });
+
+      $('#adress').bind("enterKey",function(e){
+          var address = $('#adress').val();
+          if (/^http:\/\//.test(address))
+            $('#webben').attr('src', address);
+          else
+            $('#webben').attr('src', "http://"+address);
+      });
+
+      $('#adress').keyup(function(e){
+          if(e.keyCode == 13)
+          {
+              $(this).trigger("enterKey");
+          }
+      });
+
+      var iOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
+
+//      if (iOS)
+ //       window.location.href="/ios.php";
+
+      var i = 4;
+
+      for (;i > 0; i--)
+      {
+        //$("#dialog_"+i).css("top", (80+i*30)).css("left", (80+i*30)) ;
+        $("#icon_"+i).css("top", (150+(i-1)*100)+"px");
+
+        $("#dialog_"+i).css("top", (80)).css("left", (80)) ;
+
+        $("#icon_"+i).click(new Function(' $("#dialog_'+i+'").fadeIn(200).css("z-index", z++);' ));
+        $("#dialog_"+i+" .dialog_ops .close").click(new Function(' $("#dialog_'+i+'").fadeOut(200); ' ));
+      }
+
+      var i = 8;
+
+      for (;i > 4; i--)
+      {
+        //        $("#dialog_"+i).css("top", (80+i*30)).css("left", (80+i*30)) ;
+        $("#dialog_"+i).css("top", (80)).css("left", (80)) ;
+        $("#icon_"+i).css("top", (150+(i-1-4)*100)+"px");
+        $("#icon_"+i).css("left", "100px");
+
+        $("#icon_"+i).click(new Function(' $("#dialog_'+i+'").fadeIn(200).css("z-index", z++);' ));
+        $("#dialog_"+i+" .dialog_ops .close").click(new Function(' $("#dialog_'+i+'").fadeOut(200); ' ));
+      }
+
+      $("#icon_8").click(new Function('window.location = "http://nighter.se"'));
+
+    </script>
+  </body>
+</html>
