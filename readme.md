@@ -20,7 +20,7 @@ Now application can run without an operatingsystem under a unikernel. Check appe
 
 ### Run site under unikernel
 
-  $ apt-get install qemu-kvm
+  $ apt-get install qemu-kvm genisoimage
 
   $ cd unikernel
 
