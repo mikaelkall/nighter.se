@@ -2,10 +2,13 @@
   "name": "nighter.se",
   "version": "1.0.0",
   "description": "My private homepage",
-  "main": "app.js",
+  "main": "server.js",
   "dependencies": {
     "finalhandler": "^0.4.1",
-    "serve-static": "^1.10.2"
+    "serve-static": "^1.10.2",
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "finalhandler": "^0.4.1"
   },
   "devDependencies": {
     "body-parser": "^1.15.0",
