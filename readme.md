@@ -14,15 +14,15 @@ Now application can run without an operatingsystem under a unikernel. Check appe
 
 ### Installation 
 
+   ```sh
    $ docker build -t nighter/nighter.se .
-
    $ docker run -p 8080:8080 -d nighter/nighter.se
+   ```
 
 ### Run site under unikernel
 
+  ```sh
   $ apt-get install qemu-kvm genisoimage
-
   $ cd unikernel
-
   $ make
-
+  ```
